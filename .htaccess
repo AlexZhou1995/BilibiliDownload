@@ -1,0 +1,10 @@
+ErrorDocument 404 /index.html
+
+RewriteEngine On
+
+RewriteCond %{REQUEST_URI} ^/video/
+RewriteRule ^(.*) /get.php?&url=$1 [R=permanent,NE,L]
+
+RewriteCond %{REQUEST_URI} ^/mobile/
+RewriteRule ^(.*) /formobile.html [NE,L]
+
