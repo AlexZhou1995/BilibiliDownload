@@ -7,7 +7,7 @@ if (strpos($url, "http") !== FALSE) {
 	exit;
 }
 exec("python3 ./biliDownLoad.py http://www.bilibili.com/$url", $rurl);
-if (strpos($rurl[0], "letv") !== FALSE || strpos($rurl[0], "flv") !== FALSE) {
+if (strpos($rurl[0], "http") !== FALSE) {
 	header("Location: $rurl[0]");
 	echo"<script>alert('已经开始下载！');history.go(-1);</script>";  
 	exit;
