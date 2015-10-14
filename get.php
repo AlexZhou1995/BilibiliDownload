@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: text/html;charset=utf-8");
 $url = $_GET["url"];
-if (strpos($url, "http") !== FALSE) {
+if (strpos($url, "www") !== FALSE) {
 	$after = ereg_replace('com', 'download', $url);
 	echo"<script>{location.href='$after'}</script>";
 	exit;
