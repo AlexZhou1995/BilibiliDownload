@@ -42,7 +42,7 @@ if (strpos($rurl[0], "http") !== FALSE) {
 	echo "<script>{window.alert('网址不正确！');location.href='/'};</script>";
 	exit;
 }
-	echo "<script>{window.alert('出现异常错误，抱歉！');location.href='/'};</script>";
+	echo "<script>{window.alert('出现异常错误，若您所解析的视频是番剧，请稍后再试；若为会员视频则无法解析，抱歉');location.href='/'};</script>";
 	exit;
 ?>
 
