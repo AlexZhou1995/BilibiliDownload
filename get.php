@@ -3,12 +3,12 @@ header("Content-Type: text/html;charset=utf-8");
 $url = $_GET["url"];
 if (strpos($url, "http") !== FALSE) {
 	$after = ereg_replace('com', 'download', $url);
-	echo"<script>{location.href='http://$after'}</script>";
+	echo"<script>{location.href='$after'}</script>";
 	exit;
 }
 elseif (strpos($url, "bilibili") !== FALSE) {
 	$after = ereg_replace('com', 'download', $url);
-	echo"<script>{location.href='$after'}</script>";
+	echo"<script>{location.href='http://$after'}</script>";
 	exit;
 }
 exec("python3 ./biliDownLoad.py http://www.bilibili.com/$url", $rurl);
