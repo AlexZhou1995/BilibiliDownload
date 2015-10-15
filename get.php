@@ -15,29 +15,23 @@ exec("python3 ./biliDownLoad.py http://www.bilibili.com/$url", $rurl);
 
 $myfile = fopen("debug.log", "a+");
 
-if($HTTP_SERVER_VARS["HTTP_X_FORWARDED_FOR"]){
-	$ip = $HTTP_SERVER_VARS["HTTP_X_FORWARDED_FOR"];
-}
-elseif($HTTP_SERVER_VARS["HTTP_CLIENT_IP"]){
-	$ip = $HTTP_SERVER_VARS["HTTP_CLIENT_IP"];
-}
-elseif ($HTTP_SERVER_VARS["REMOTE_ADDR"]){
-	$ip = $HTTP_SERVER_VARS["REMOTE_ADDR"];
-}
-elseif (getenv("HTTP_X_FORWARDED_FOR")){
-	$ip = getenv("HTTP_X_FORWARDED_FOR");
-}
-elseif (getenv("HTTP_CLIENT_IP")){
-	$ip = getenv("HTTP_CLIENT_IP");
-}
-elseif (getenv("REMOTE_ADDR")){
-	$ip = getenv("REMOTE_ADDR");
-}
-else{
-	$ip = "Unknown";
-}
+$ipaddress = '';
+if ($_SERVER['HTTP_CLIENT_IP'])
+    $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+else if($_SERVER['HTTP_X_FORWARDED_FOR'])
+    $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+else if($_SERVER['HTTP_X_FORWARDED'])
+    $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+else if($_SERVER['HTTP_FORWARDED_FOR'])
+    $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+else if($_SERVER['HTTP_FORWARDED'])
+    $ipaddress = $_SERVER['HTTP_FORWARDED'];
+else if($_SERVER['REMOTE_ADDR'])
+    $ipaddress = $_SERVER['REMOTE_ADDR'];
+else
+    $ipaddress = 'UNKNOWN';
 
-fwrite($myfile, $ip."   ".$url."   ".$rurl."\n");
+fwrite($myfile, $ipaddress."   ".$url."   ".$rurl."\n");
 fclose($myfile);
 
 if (strpos($rurl[0], "http") !== FALSE) {
