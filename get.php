@@ -31,7 +31,7 @@ else if($_SERVER['REMOTE_ADDR'])
 else
     $ipaddress = 'UNKNOWN';
 
-fwrite($myfile, $ipaddress."   ".$url."   ".$rurl."\n");
+fwrite($myfile, $ipaddress."   ".$url."   ".$rurl[0]."\n");
 fclose($myfile);
 
 if (strpos($rurl[0], "http") !== FALSE) {
