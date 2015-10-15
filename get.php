@@ -7,6 +7,15 @@ if (strpos($url, "www") !== FALSE) {
 	exit;
 }
 exec("python3 ./biliDownLoad.py http://www.bilibili.com/$url", $rurl);
+
+$myfile = fopen("debug.log", "a+");
+
+$user_IP = ($_SERVER["HTTP_VIA"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : $_SERVER["REMOTE_ADDR"];
+$user_IP = ($user_IP) ? $user_IP : $_SERVER["REMOTE_ADDR"];
+
+fwrite($myfile, $user_IP."   ".$url."   ".$rurl."\n");
+fclose($myfile);
+
 if (strpos($rurl[0], "http") !== FALSE) {
 	header("Location: $rurl[0]");
 	echo"<script>alert('已经开始下载！');history.go(-1);</script>";  
