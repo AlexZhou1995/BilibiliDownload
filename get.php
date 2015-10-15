@@ -1,7 +1,12 @@
 <?php
 header("Content-Type: text/html;charset=utf-8");
 $url = $_GET["url"];
-if (strpos($url, "www") !== FALSE) {
+if (strpos($url, "http") !== FALSE) {
+	$after = ereg_replace('com', 'download', $url);
+	echo"<script>{location.href='http://$after'}</script>";
+	exit;
+}
+elseif (strpos($url, "bilibili") !== FALSE) {
 	$after = ereg_replace('com', 'download', $url);
 	echo"<script>{location.href='$after'}</script>";
 	exit;
@@ -10,10 +15,29 @@ exec("python3 ./biliDownLoad.py http://www.bilibili.com/$url", $rurl);
 
 $myfile = fopen("debug.log", "a+");
 
-$user_IP = ($_SERVER["HTTP_VIA"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : $_SERVER["REMOTE_ADDR"];
-$user_IP = ($user_IP) ? $user_IP : $_SERVER["REMOTE_ADDR"];
+if($HTTP_SERVER_VARS["HTTP_X_FORWARDED_FOR"]){
+	$ip = $HTTP_SERVER_VARS["HTTP_X_FORWARDED_FOR"];
+}
+elseif($HTTP_SERVER_VARS["HTTP_CLIENT_IP"]){
+	$ip = $HTTP_SERVER_VARS["HTTP_CLIENT_IP"];
+}
+elseif ($HTTP_SERVER_VARS["REMOTE_ADDR"]){
+	$ip = $HTTP_SERVER_VARS["REMOTE_ADDR"];
+}
+elseif (getenv("HTTP_X_FORWARDED_FOR")){
+	$ip = getenv("HTTP_X_FORWARDED_FOR");
+}
+elseif (getenv("HTTP_CLIENT_IP")){
+	$ip = getenv("HTTP_CLIENT_IP");
+}
+elseif (getenv("REMOTE_ADDR")){
+	$ip = getenv("REMOTE_ADDR");
+}
+else{
+	$ip = "Unknown";
+}
 
-fwrite($myfile, $user_IP."   ".$url."   ".$rurl."\n");
+fwrite($myfile, $ip."   ".$url."   ".$rurl."\n");
 fclose($myfile);
 
 if (strpos($rurl[0], "http") !== FALSE) {
